@@ -4,6 +4,7 @@ import { supabase } from '../supabase-client';
 import { MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import LikeButton from './LikeButton';
+import CommentSection from './CommentSection';
 
 interface Post {
     id: number;
@@ -139,9 +140,8 @@ const PostDetail = ({ postId }: PostDetailProps) => {
                 </div>
 
                 {/* Comments Section */}
-                <div className="border-t border-gray-200 px-4 py-3">
-                    <p className="text-sm text-gray-500 mb-3">View all 45 comments</p>
-                    
+                <div className="px-4 pb-4 border-t border-gray-200">
+                    <CommentSection postId={0} />
                     {/* Sample Comments */}
                     <div className="space-y-3 mb-4">
                         <div className="flex items-start gap-2">

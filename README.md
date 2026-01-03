@@ -35,6 +35,25 @@ DevConnect is a full-stack web application that enables developers to:
 - Engage through nested comments and replies
 - Like and interact with posts
 - Discover other developers and their work
+The project focuses on real-world workflows, clean architecture, and open-source best practices, making it a great learning platform.
+
+##👋 New to Open Source?
+Welcome to DevConnect 💙
+If this is your first open-source contribution, you’re in the right place!
+
+## 🚀 How to Start
+1. Read FIRST_CONTRIBUTION.md for a step-by-step beginner guide
+2. Check CONTRIBUTING.md to understand rules and workflow
+3. Look for issues labeled:
+  - good first issue
+  - beginner-friendly
+4. Comment on an issue to get it assigned
+
+## 🤝 Need Help?
+Don’t hesitate to ask questions by:
+  - Commenting on issues
+  - Opening a discussion
+Maintainers are happy to help beginners 🌱
 
 ## 🛠 Tech Stack
 

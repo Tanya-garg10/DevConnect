@@ -20,4 +20,6 @@ const CommunityPage = () => {
   );
 };
 
-export default CommunityPage;
+export default function CommunityPage() {
+  return <div>Community Page</div>;
+}

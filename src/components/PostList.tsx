@@ -1,27 +1,23 @@
+// src/components/PostList.tsx
 import PostCard from "./PostCard";
 
-interface PostListProps {
-  userId?: string;
-}
-
-const posts: any[] = []; // later Supabase se aayega
-
-const PostList = ({ userId }: PostListProps) => {
-  if (posts.length === 0) {
-    return (
-      <div className="border border-dashed border-cyan-700/40 rounded-xl p-8 text-center text-gray-400 font-mono">
-        No posts found ✨
-      </div>
-    );
-  }
-
+export default function PostList() {
+  const posts = []; // mock posts
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+    <div className="grid gap-4 w-full">
+      {posts.map((post, idx) => (
+        <PostCard key={idx} />
       ))}
     </div>
   );
-};
+}
 
-export default PostList;
+// src/components/PostCard.tsx
+export default function PostCard() {
+  return (
+    <div className="p-4 border border-gray-700 rounded-lg text-gray-300">
+      PostCard placeholder
+    </div>
+  );
+}
+

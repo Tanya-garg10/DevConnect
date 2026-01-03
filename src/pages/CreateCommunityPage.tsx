@@ -31,4 +31,6 @@ const CreateCommunityPage = () => {
   );
 };
 
-export default CreateCommunityPage;
+export default function CreateCommunityPage() {
+  return <div>Create Community Page</div>;
+}

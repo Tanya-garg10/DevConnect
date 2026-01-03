@@ -38,15 +38,13 @@ const createComment = async (
   author?: string,
   avatarUrl?: string
 ) => {
-  if (!userId || !author) {
-    throw new Error('You must be logged in to comment.');
-  }
+  if (!userId || !author) throw new Error('You must be logged in to comment.');
 
   const { error } = await supabase.from('Comments').insert({
     post_id: postId,
-    content: content,
+    content,
     user_id: userId,
-    author: author,
+    author,
     avatar_url: avatarUrl || null,
   });
 
@@ -86,24 +84,15 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
   const buildCommentTree = (comments: Comment[]): Comment[] => {
     const map = new Map<number, Comment>();
     const roots: Comment[] = [];
-
-    comments.forEach(comment => {
-      map.set(comment.id, { ...comment, children: [] });
-    });
-
+    comments.forEach(comment => map.set(comment.id, { ...comment, children: [] }));
     comments.forEach(comment => {
       const node = map.get(comment.id)!;
-      if (comment.parent_comment_id === null) {
-        roots.push(node);
-      } else {
+      if (comment.parent_comment_id === null) roots.push(node);
+      else {
         const parent = map.get(comment.parent_comment_id);
-        if (parent) {
-          if (!parent.children) parent.children = [];
-          parent.children.push(node);
-        }
+        if (parent) parent.children!.push(node);
       }
     });
-
     return roots;
   };
 
@@ -113,9 +102,9 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
     const date = new Date(dateString);
     const now = new Date();
     const diffInMs = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
     const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
     const diffInDays = Math.floor(diffInHours / 24);
-    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
 
     if (diffInMinutes < 1) return 'just now';
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
@@ -127,20 +116,20 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
   return (
     <div className="mt-8">
       <h3 className="font-mono text-lg font-bold text-cyan-300 mb-6">// comments</h3>
-      
+
       {/* Comment Input */}
       {user ? (
-        <form className="mb-6" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="mb-6">
           <div className="bg-slate-900 border border-cyan-900/30 rounded-lg p-4">
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               {user?.user_metadata?.avatar_url ? (
                 <img 
                   src={user.user_metadata.avatar_url}
                   alt="Your avatar"
-                  className="w-10 h-10 rounded-full ring-2 ring-cyan-400/50 shrink-0 object-cover"
+                  className="w-10 h-10 rounded-full ring-2 ring-cyan-400/50 flex-shrink-0 object-cover"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-linear-to-br from-cyan-500 to-blue-600 shrink-0"></div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex-shrink-0"/>
               )}
               <div className="flex-1">
                 <textarea
@@ -150,7 +139,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
                   onChange={(e) => setNewComment(e.target.value)}
                   rows={3}
                 />
-                <div className="flex justify-end gap-2 mt-2">
+                <div className="flex justify-end gap-2 mt-2 flex-wrap">
                   <button
                     type="button"
                     onClick={() => setNewComment('')}
@@ -159,8 +148,8 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
                     cancel
                   </button>
                   <button
-                    className="px-4 py-1 text-sm font-mono font-bold text-white bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-500/50 rounded transition disabled:opacity-50"
                     type="submit"
+                    className="px-4 py-1 text-sm font-mono font-bold text-white bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-500/50 rounded transition disabled:opacity-50"
                     disabled={isPending || !newComment.trim()}
                   >
                     {isPending ? 'posting...' : 'post'}
@@ -178,11 +167,11 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
       )}
 
       {/* Comments List */}
-      <div className="space-y-0">
+      <div className="space-y-4">
         {isLoading ? (
-          <div className="text-gray-500 text-center py-4 font-mono">loading comments...</div>
+          <div className="text-gray-400 text-center py-4 font-mono">loading comments...</div>
         ) : commentTree.length === 0 ? (
-          <div className="text-gray-500 text-center py-4 font-mono">no comments yet</div>
+          <div className="text-gray-400 text-center py-4 font-mono">no comments yet</div>
         ) : (
           commentTree.map((comment) => (
             <CommentItem key={comment.id} comment={comment} postId={postId} formatTime={formatTime} />

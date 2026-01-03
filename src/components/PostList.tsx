@@ -1,47 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
-import { supabase } from '../supabase-client';
-import PostItem from './PostItem';
+import PostCard from "./PostCard";
 
-export interface Post {
-    id: number;
-    title: string;
-    content: string;
-    image_url: string;
-    created_at: string;
-    avatar_url: string;
-    likes: number;
+interface PostListProps {
+  userId?: string;
 }
 
-const fetchPosts = async (): Promise<Post[]> => {
-    const {data, error} = await supabase.from('Posts').select('*').order('created_at', {ascending: false});
-    if (error) {
-        throw new Error("Error fetching posts: " + error.message);
-    }
-    return data as Post[];
-};
+const posts: any[] = []; // later Supabase se aayega
 
-const PostList = () => {
-    const {data, error, isLoading} = useQuery<Post[], Error>({
-        queryKey: ["posts"], 
-        queryFn: fetchPosts
-    });
-
-    if (isLoading) {
-        return <div>Loading posts...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading posts: {error.message}</div>;
-    }
-
+const PostList = ({ userId }: PostListProps) => {
+  if (posts.length === 0) {
+    return (
+      <div className="border border-dashed border-cyan-700/40 rounded-xl p-8 text-center text-gray-400 font-mono">
+        No posts found ✨
+      </div>
+    );
+  }
 
   return (
-    <div>
-        {data?.map((post) => (
-            <PostItem post={post}/>
-        ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default PostList
+export default PostList;

@@ -10,13 +10,13 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-6xl font-bold font-mono mb-4 text-white leading-tight">
+              <h1 className="text-5xl sm:text-6xl font-bold font-mono mb-4 text-white leading-tight">
                 <span className="text-cyan-400">Dev</span>Connect
               </h1>
-              <p className="text-xl text-gray-400 font-mono mb-8">
+              <p className="text-lg sm:text-xl text-gray-400 font-mono mb-8">
                 Share ideas, build together, connect with developers worldwide
               </p>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   to="/create"
                   className="flex items-center gap-2 px-6 py-3 bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-400/50 rounded-lg text-cyan-300 font-mono font-bold transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20"
@@ -26,7 +26,7 @@ const Home = () => {
                 </Link>
                 <Link 
                   to="/communities"
-                  className="px-6 py-3 bg-slate-800/50 hover:bg-slate-800 border border-gray-600/30 rounded-lg text-gray-300 font-mono font-bold transition-all duration-300"
+                  className="px-6 py-3 bg-slate-800/50 hover:bg-slate-800 border border-gray-600/30 rounded-lg text-gray-300 font-mono font-bold transition-all duration-300 text-center"
                 >
                   explore communities
                 </Link>
@@ -46,15 +46,12 @@ const Home = () => {
       </div>
 
       {/* Posts Section */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-10">
-          
-        </div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col items-center">
-          <h2 className="text-4xl font-bold font-mono text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl font-bold font-mono text-white mb-2">
             <span className="text-cyan-400">~/</span>recent_posts
           </h2>
-          <p className="text-gray-400 font-mono text-sm">
+          <p className="text-gray-400 font-mono text-sm mb-6">
             latest updates from the community
           </p>
           <PostList />
@@ -64,4 +61,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
